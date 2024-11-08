@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,11 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-       'djoser',
-       'rest_framework',
+    'djoser',
+    'rest_framework',
     'rest_framework.authtoken',
-      'corsheaders',
-      'chat'
+    'corsheaders',
+    'chat'
 ]
 
 MIDDLEWARE = [
@@ -53,7 +54,26 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+ 
 ]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 3600  # Session expires in 1 hour
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Session expires when the browser is closed
+# If True, Django will set the cookie as Secure (only sent over HTTPS)
+# SESSION_COOKIE_SECURE = True
+
+# # If True, Django will set the cookie to be HttpOnly, meaning it is not accessible via JavaScript
+# SESSION_COOKIE_HTTPONLY = True
+
+# The path where the session cookie is valid (default is '/')
+# SESSION_COOKIE_PATH = '/'
+
+# # Domain where the session cookie is valid (default is current domain)
+# SESSION_COOKIE_DOMAIN = None
+
+# # Whether the session cookie is sent only over secure connections
+# CSRF_COOKIE_SECURE = True  
 
 ROOT_URLCONF = 'chatten.urls'
 
@@ -121,6 +141,36 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 CORS_ORIGIN_ALLOW_ALL = True
+# settings.py
+
+CORS_ALLOW_CREDENTIALS = True  # Allow credentials (cookies, authorization headers)
+
+# Allow requests from your front-end origin (in this case, http://localhost:8080)
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8081',  # The URL of your frontend
+]
+
+# Alternatively, you can allow any origin but ensure credentials are handled securely
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     r"^https?://localhost:8080$",
+# ]
+
+# This header must not be wildcard '*' when credentials are included
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'x-requested-with',
+]
+
+# Optional: Allow certain methods, such as POST, GET, PUT, DELETE
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'OPTIONS',
+    'PUT',
+    'DELETE',
+]
+
 
 TIME_ZONE = 'UTC'
 
