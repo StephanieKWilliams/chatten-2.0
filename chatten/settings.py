@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'chat'
+    'chat',
+    'notifications',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -92,6 +94,14 @@ TEMPLATES = [
         },
     },
 ]
+
+# settings.py
+CELERY_BROKER_URL = 'pyamqp://guest:guest@localhost//'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+
+ASGI_APPLICATION = 'chatten.asgi.application'
 
 WSGI_APPLICATION = 'chatten.wsgi.application'
 
@@ -169,6 +179,7 @@ CORS_ALLOW_METHODS = [
     'OPTIONS',
     'PUT',
     'DELETE',
+    'PATCH'
 ]
 
 

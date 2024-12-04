@@ -8,7 +8,7 @@ from .models import (
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions
-
+from .tasks import send_chat_notification
 
 class ChatSessionView(APIView):
     """Manage Chat sessions."""
@@ -72,7 +72,7 @@ class ChatSessionMessageView(APIView):
             'messages': messages
         })
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs ):
         """create a new message in a chat session."""
         uri = kwargs['uri']
         message = request.data['message']
@@ -83,6 +83,9 @@ class ChatSessionMessageView(APIView):
         ChatSessionMessage.objects.create(
             user=user, chat_session=chat_session, message=message
         )
+    
+        # Call the Celery task asynchronously
+        send_chat_notification.delay(chat_session.id, user.id) 
 
         return Response ({
             'status': 'SUCCESS', 'uri': chat_session.uri, 'message': message,
