@@ -14,12 +14,12 @@ def send_chat_notification(chat_session_id, user_id):
 
     # Prepare notification arguments
     notif_args = {
-        'source': user,  # The actor (sender)
+        'sender': user,  # The actor (sender)
         'source_display_name': user.get_full_name(),
         'category': 'chat',
         'action': 'Sent',
         'obj': chat_session.id,
-        'short_description': 'You have a new message',
+        'verb': 'You have a new message',
         'silent': True,
         'extra_data': {'uri': chat_session.uri}
     }
@@ -29,7 +29,7 @@ def send_chat_notification(chat_session_id, user_id):
     # Send notification to each recipient
     for recipient in recipients:
         notify.send(
-            sender='chat_notification_sender',
+       
             recipient=recipient.user,  # Access the 'user' field of ChatSessionMember
             **notif_args,
             channels=['websocket']
