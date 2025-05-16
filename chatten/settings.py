@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-nl3=c2dp6q6p@w5^1s5$92dyfh-a_vnb6^fh5cs-_ah*9hpntx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'chat',
-    'notifications',
-    'channels'
+    'channels',
+    'notifications'
 ]
 
 MIDDLEWARE = [
@@ -102,6 +102,48 @@ CELERY_TASK_SERIALIZER = 'json'
 
 
 ASGI_APPLICATION = 'chatten.asgi.application'
+
+# CHANNEL_LAYERS = {
+#      'default': {
+#         'BACKEND': 'channels_rabbitmq.RabbitmqChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('localhost', 5672)],  # RabbitMQ default settings
+#         },
+#     },
+# }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],  # Ensure Redis is running
+        },
+    },
+}
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
+
+
+# settings.py
+
+
+
 
 WSGI_APPLICATION = 'chatten.wsgi.application'
 

@@ -37,8 +37,9 @@ class ChatSessionView(APIView):
         chat_session = ChatSession.objects.get(uri=uri)
         owner = chat_session.owner
 
-        if owner != user:  # Only allow non owners join the room             chat_session.members.get_or_create(
-                user=user, chat_session=chat_session
+        if owner != user:  # Only allow non owners join the room            
+            chat_session.members.get_or_create(
+                user=user, chat_session=chat_session)
                 
 
         owner = deserialize_user(owner)
